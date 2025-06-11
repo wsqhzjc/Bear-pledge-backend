@@ -1,9 +1,10 @@
 package kucoin
 
 import (
-	"github.com/Kucoin/kucoin-go-sdk"
 	"pledge-backend/db"
 	"pledge-backend/log"
+
+	"github.com/Kucoin/kucoin-go-sdk"
 )
 
 // ApiKeyVersionV2 is v2 api key version
@@ -31,6 +32,8 @@ func GetExchangePrice() {
 		kucoin.ApiKeyVersionOption(ApiKeyVersionV2),
 	)
 
+	kucoin.DebugMode = true
+
 	rsp, err := s.WebSocketPublicToken()
 	if err != nil {
 		log.Logger.Error(err.Error()) // Handle error
@@ -51,14 +54,17 @@ func GetExchangePrice() {
 		return
 	}
 
-	ch := kucoin.NewSubscribeMessage("/market/ticker:PLGR-USDT", false)
-	uch := kucoin.NewUnsubscribeMessage("/market/ticker:PLGR-USDT", false)
+	// ch := kucoin.NewSubscribeMessage("/market/ticker:PLGR-USDT", false)
+	// uch := kucoin.NewUnsubscribeMessage("/market/ticker:PLGR-USDT", false)
+
+	ch := kucoin.NewSubscribeMessage("/market/ticker:ETH-USDT", false)
+	uch := kucoin.NewUnsubscribeMessage("/market/ticker:ETH-USDT", false)
 
 	if err := c.Subscribe(ch); err != nil {
 		log.Logger.Error(err.Error()) // Handle error
 		return
 	}
-
+	log.Logger.Sugar().Info("subscribe plgr price")
 	for {
 		select {
 		case err := <-ec:
@@ -68,13 +74,14 @@ func GetExchangePrice() {
 			return
 		case msg := <-mc:
 			t := &kucoin.TickerLevel1Model{}
+			// log.Logger.Sugar().Info("msg ", msg)
 			if err := msg.ReadData(t); err != nil {
 				log.Logger.Sugar().Errorf("Failure to read: %s", err.Error())
 				return
 			}
 			PlgrPriceChan <- t.Price
 			PlgrPrice = t.Price
-			//log.Logger.Sugar().Info("Price ", t.Price)
+			// log.Logger.Sugar().Info("Price ", t.Price)
 			_ = db.RedisSetString("plgr_price", PlgrPrice, 0)
 		}
 	}

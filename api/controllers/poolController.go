@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"github.com/gin-gonic/gin"
 	"pledge-backend/api/common/statecode"
 	"pledge-backend/api/models"
 	"pledge-backend/api/models/request"
@@ -12,6 +11,8 @@ import (
 	"regexp"
 	"strings"
 	"time"
+
+	"github.com/gin-gonic/gin"
 )
 
 type PoolController struct {
@@ -56,7 +57,6 @@ func (c *PoolController) PoolDataInfo(ctx *gin.Context) {
 	}
 
 	res.Response(ctx, statecode.CommonSuccess, result)
-	return
 }
 
 func (c *PoolController) TokenList(ctx *gin.Context) {

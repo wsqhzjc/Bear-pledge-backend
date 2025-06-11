@@ -1,7 +1,6 @@
 package main
 
 import (
-	"github.com/gin-gonic/gin"
 	"pledge-backend/api/middlewares"
 	"pledge-backend/api/models/kucoin"
 	"pledge-backend/api/models/ws"
@@ -10,6 +9,8 @@ import (
 	"pledge-backend/api/validate"
 	"pledge-backend/config"
 	"pledge-backend/db"
+
+	"github.com/gin-gonic/gin"
 )
 
 func main() {
@@ -30,7 +31,7 @@ func main() {
 	go kucoin.GetExchangePrice()
 
 	// gin start
-	gin.SetMode(gin.ReleaseMode)
+	gin.SetMode(gin.DebugMode)
 	app := gin.Default()
 	staticPath := static.GetCurrentAbPathByCaller()
 	app.Static("/storage/", staticPath)

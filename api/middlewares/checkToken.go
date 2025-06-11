@@ -1,12 +1,13 @@
 package middlewares
 
 import (
-	"github.com/gin-gonic/gin"
 	"pledge-backend/api/common/statecode"
 	"pledge-backend/api/models/response"
 	"pledge-backend/config"
 	"pledge-backend/db"
 	"pledge-backend/utils"
+
+	"github.com/gin-gonic/gin"
 )
 
 func CheckToken() gin.HandlerFunc {

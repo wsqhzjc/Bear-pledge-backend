@@ -1,5 +1,5 @@
 package request
 
 type TokenList struct {
-	ChainId int `form:"chainId" binding:"required"`
+	ChainId int `form:"chainId" json:"chain_id" binding:"required"`
 }

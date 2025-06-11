@@ -3,11 +3,6 @@ package services
 import (
 	"encoding/json"
 	"errors"
-	"github.com/ethereum/go-ethereum/accounts/abi"
-	"github.com/ethereum/go-ethereum/accounts/abi/bind"
-	"github.com/ethereum/go-ethereum/common"
-	"github.com/ethereum/go-ethereum/ethclient"
-	"gorm.io/gorm"
 	"os"
 	"pledge-backend/config"
 	abifile "pledge-backend/contract/abi"
@@ -16,6 +11,13 @@ import (
 	"pledge-backend/schedule/models"
 	"pledge-backend/utils"
 	"strings"
+
+	"github.com/ethereum/go-ethereum/accounts/abi"
+	"github.com/ethereum/go-ethereum/accounts/abi/bind"
+	"github.com/ethereum/go-ethereum/common"
+	"github.com/ethereum/go-ethereum/ethclient"
+	"go.uber.org/zap"
+	"gorm.io/gorm"
 )
 
 type TokenSymbol struct{}
@@ -74,8 +76,8 @@ func (s *TokenSymbol) UpdateContractSymbol() {
 // GetRemoteAbiFileByToken get and save remote abi file on main net
 func (s *TokenSymbol) GetRemoteAbiFileByToken(token, chainId string) error {
 
-	url := "https://api.bscscan.com/api?module=contract&action=getabi&apikey=HJ3WS4N88QJ6S7PQ8D89BD49IZIFP1JFER&address=" + token
-
+	url := "https://api.bscscan.com/api?module=contract&action=getabi&apikey=THS7S8XBXUBZAIV84M4Q5KUBJI2NE2GSJA&address=" + token
+	log.Logger.Info("start to execute GetRemoteAbiFileByToken url: ", zap.String("url", url))
 	res, err := utils.HttpGet(url, map[string]string{})
 	if err != nil {
 		log.Logger.Error(err.Error())

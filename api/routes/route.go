@@ -1,10 +1,11 @@
 package routes
 
 import (
-	"github.com/gin-gonic/gin"
 	"pledge-backend/api/controllers"
 	"pledge-backend/api/middlewares"
 	"pledge-backend/config"
+
+	"github.com/gin-gonic/gin"
 )
 
 func InitRoute(e *gin.Engine) *gin.Engine {
@@ -19,14 +20,13 @@ func InitRoute(e *gin.Engine) *gin.Engine {
 	v2Group.GET("/token", poolController.TokenList)                                             //pool token information
 	v2Group.POST("/pool/debtTokenList", middlewares.CheckToken(), poolController.DebtTokenList) //pool debtTokenList
 	v2Group.POST("/pool/search", middlewares.CheckToken(), poolController.Search)               //pool search
-
 	// plgr-usdt price
 	priceController := controllers.PriceController{}
 	v2Group.GET("/price", priceController.NewPrice) //new price on ku-coin-exchange
 
 	// pledge-defi admin backend
 	multiSignPoolController := controllers.MultiSignPoolController{}
-	v2Group.POST("/pool/setMultiSign", middlewares.CheckToken(), multiSignPoolController.SetMultiSign) //multi-sign set
+	v2Group.POST("/pool/setMultiSign", middlewares.CheckToken(), multiSignPoolController.SetMultiSign) //multi-sign set                         //multi-sign set
 	v2Group.POST("/pool/getMultiSign", middlewares.CheckToken(), multiSignPoolController.GetMultiSign) //multi-sign get
 
 	userController := controllers.UserController{}

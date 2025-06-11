@@ -1,23 +1,22 @@
 package config
 
 import (
-	"github.com/BurntSushi/toml"
 	"path"
 	"path/filepath"
 	"runtime"
+
+	"github.com/BurntSushi/toml"
 )
 
 func init() {
 	currentAbPath := getCurrentAbPathByCaller()
-	tomlFile, err := filepath.Abs(currentAbPath + "/configV21.toml")
-	//tomlFile, err := filepath.Abs(currentAbPath + "/configV22.toml")
+	//tomlFile, err := filepath.Abs(currentAbPath + "/configV21.toml")
+	tomlFile, err := filepath.Abs(currentAbPath + "/configV22.toml")
 	if err != nil {
 		panic("read toml file err: " + err.Error())
-		return
 	}
 	if _, err := toml.DecodeFile(tomlFile, &Config); err != nil {
 		panic("read toml file err: " + err.Error())
-		return
 	}
 }
 
