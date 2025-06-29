@@ -71,6 +71,8 @@ type TestNetConfig struct {
 	PlgrAddress          string `toml:"plgr_address"`
 	PledgePoolToken      string `toml:"pledge_pool_token"`
 	BscPledgeOracleToken string `toml:"bsc_pledge_oracle_token"`
+	PancakeRouterToken   string `toml:"pancake_router_token"`
+	PancakeFactoryToken  string `toml:"pancake_factory_token"`
 }
 
 type MainNetConfig struct {
@@ -79,6 +81,8 @@ type MainNetConfig struct {
 	PlgrAddress          string `toml:"plgr_address"`
 	PledgePoolToken      string `toml:"pledge_pool_token"`
 	BscPledgeOracleToken string `toml:"bsc_pledge_oracle_token"`
+	PancakeRouterToken   string `toml:"pancake_router_token"`
+	PancakeFactoryToken  string `toml:"pancake_factory_token"`
 }
 
 type RedisConfig struct {
